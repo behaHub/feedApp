@@ -1,93 +1,70 @@
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "\"Table\"")
-public class Address {
+@Table(name = "\"Address\"")
+@NamedQuery(name="Address.findAll", query="SELECT a FROM Address a")
+public class Address implements Serializable{
 
-	@Column(name = "\"address\"")
-	private String address;
-	
-	@Column(name = "\"city\"")
-	private String city;
-	
-	@Column(name = "\"state\"")
-	private String state;
-	
-	@Column(name = "\"country\"")
-	private String country;
-	
-	@Column(name = "\"pincode\"")
-	private String pincode;
-	
-	@Id
-	@Column(name = "\"username\"")
-	private String username;
-	
-	public Address() {
-		super();
-	}
+    @EmbeddedId
+    private AddressID id;
 
-	public Address(String address, String city, String state, String country, String pincode, String username) {
-		super();
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.country = country;
-		this.pincode = pincode;
-		this.username = username;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"usernameKey\"", nullable = false)
+    @JsonBackReference
+    private UserID usernameKey;
 
-	public String getAddress() {
-		return address;
-	}
+    @Column(name = "city", nullable = false)
+    private String city;
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    @Column(name = "state", nullable = false)
+    private String state;
 
-	public String getCity() {
-		return city;
-	}
+    @Column(name = "country", nullable = false)
+    private String country;
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getPincode() {
-		return pincode;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
+    public UserID getUsernameKey() {
+        return usernameKey;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setUsernameKey(UserID usernameKey) {
+        this.usernameKey = usernameKey;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public AddressID getId() {
+        return id;
+    }
 
+    public void setId(AddressID id) {
+        this.id = id;
+    }
 }

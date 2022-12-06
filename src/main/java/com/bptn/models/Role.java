@@ -1,82 +1,59 @@
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"Role\"")
+@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
+public class Role implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-public class Role {
+    @EmbeddedId
+    private RoleID id;
 
-	
-	@Column(name = "\"role\"")
-	private String role;
-	
-	@Column(name = "\"company\"")
-	private String company;
-	
-	@Column(name = "\"skills\"")
-	private String skills;
-	
-	@Id
-	@Column (name = "\"username\"")
-	private String username;
-	
-	
-	public Role() {
-		
-		super();
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"usernameKey\"", nullable = false, insertable=false, updatable = false)
+    @JsonBackReference
+    private UserID usernameKey;
 
+    @Column(name = "company", nullable = false)
+    private String company;
 
-	public Role(String role, String company, String skills, String username) {
-		super();
-		this.role = role;
-		this.company = company;
-		this.skills = skills;
-		this.username = username;
-	}
+    @Column(name = "skills", nullable = false)
+    private String skills;
 
+    public String getSkills() {
+        return skills;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
 
+    public String getCompany() {
+        return company;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
+    public UserID getUsernameKey() {
+        return usernameKey;
+    }
 
-	public String getCompany() {
-		return company;
-	}
+    public void setUsernameKey(UserID usernameKey) {
+        this.usernameKey = usernameKey;
+    }
 
+    public RoleID getId() {
+        return id;
+    }
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-
-	public String getSkills() {
-		return skills;
-	}
-
-
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
-
-
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+    public void setId(RoleID id) {
+        this.id = id;
+    }
 }

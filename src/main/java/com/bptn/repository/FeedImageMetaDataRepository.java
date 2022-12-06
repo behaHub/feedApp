@@ -14,7 +14,8 @@ public interface FeedImageMetaDataRepository extends JpaRepository<ImageMetaData
 	
 	List <ImageMetaData> findByPostKey(String postkey);
 
-	Optional<ImageMetaData> findByID(String imageID);
+	
+	//Optional<ImageMetaData> findByID(String imageID);
 
 
 }
